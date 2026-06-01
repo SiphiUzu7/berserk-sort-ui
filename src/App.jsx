@@ -2,10 +2,12 @@ import { useState } from 'react'
 import Quiz from './components/Quiz'
 import Result from './components/Results'
 import Loader from './components/Loader'
+import Dashboard from './components/Dashboard'
 
 function App() {
   const [screen, setScreen] = useState('quiz')
   const [result, setResult] = useState(null)
+  const [stats, setStats] = useState([])
 
   const handleComplete = async (answers) => {
     setScreen('loading')
@@ -19,6 +21,10 @@ function App() {
     const data = await response.json()
     setResult(data)
     setScreen('result')
+
+    fetch('http://localhost:3000/stats')
+  .then(res => res.json())
+  .then(data => setStats(data))
   }
 
   const handleRetake = () => {
@@ -34,6 +40,7 @@ function App() {
       {screen === 'quiz' && <Quiz onComplete={handleComplete} />}
       {screen === 'loading' && <Loader />}
       {screen === 'result' && <Result result={result} onRetake={handleRetake} />}
+      {screen === 'result' && <Dashboard stats={stats} />}
     </div>
   )
 }

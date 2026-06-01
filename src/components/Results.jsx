@@ -11,7 +11,7 @@ function Result({ result, onRetake }) {
         Arc: {result.arc_reference}
       </p>
       <p style={{ color: '#888', marginBottom: '2rem', fontSize: '0.9rem' }}>
-        Characters: {result.characters.join(', ')}
+        Characters: {result.characters && result.characters.join(', ')}
       </p>
       <button
         onClick={onRetake}
